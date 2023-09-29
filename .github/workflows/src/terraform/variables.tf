@@ -5,7 +5,7 @@ variable "prefix" {
 
 variable "location" {
     type = string
-    description = "default region for our infrastructure"
+    description = "default region for our infrastructures"
 }
 
 variable "environment" {
