@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - "src/terraform/**"
+      - ".github/workflows/src/terraform/**"
       - ".github/workflows/**"
 
 env:
-  WORKING_DIRECTORY: "/azure-wolf-ai/.github/workflows/src/terraform"
+  WORKING_DIRECTORY: ".github/workflows/src/terraform"
   PREFIX: "woof-ai"
   ENVIRONMENT: "dev"
 
