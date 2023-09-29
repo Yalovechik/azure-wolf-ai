@@ -17,8 +17,7 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@3
 
       - name: hashicorp/setup-terraform@3
         with:
@@ -45,5 +44,4 @@ jobs:
             -backend-config="storage_account_name=$BACKEND_STORAGE_ACCOUNT_NAME" \
             -backend-config="container_name=$BACKEND_STORAGE_CONTAINER_NAME" \
             -backend-config="key=$TF_BACKEND_KEY"
-
-          terraform apply --auto-approve
+           terraform apply --auto-approve
