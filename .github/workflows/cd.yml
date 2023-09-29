@@ -27,17 +27,16 @@ jobs:
 
       - name: Terraform Apply
         env:
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          ARM_TENANT_SECRET: ${{ secrets.ARM_TENANT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
-          BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME }}
-          BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
+          BACKEND_RESOURCE_GROUP_NAME: ${{ vars.BACKEND_RESOURCE_GROUP_NAME }}
+          BACKEND_STORAGE_ACCOUNT_NAME: ${{ vars.BACKEND_STORAGE_ACCOUNT_NAME }}
+          BACKEND_STORAGE_CONTAINER_NAME: ${{ vars.BACKEND_STORAGE_CONTAINER_NAME }}
           TV_VAR_prefix: ${{ env.PREFIX }}
           TV_VAR_environment: ${{ env.ENVIRONMENT }}
-          TF_BACKEND_KEY: ${{ env.PREFIX}}-${{ env.ENVIRONMENT }}
+          TF_BACKEND_KEY: ${{ env.PREFIX }}-${{ env.ENVIRONMENT }}
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           terraform init \
