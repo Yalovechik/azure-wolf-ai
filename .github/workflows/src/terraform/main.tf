@@ -54,7 +54,8 @@ resource "azurerm_linux_function_app" "fn_app" {
   }
 
   app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = 1
+    # WEBSITE_RUN_FROM_PACKAGE = 1
+    SCM_DO_BUILD_DURING_DEPLOYMENT=true
     # "APPINSIGHTS_INSTRUMENTATIONKEY"= azurerm_application_insights.insight.instrumentation_key
 
   }
