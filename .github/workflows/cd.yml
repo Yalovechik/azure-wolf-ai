@@ -14,22 +14,37 @@ env:
   PYTHON_WORKING_DIRECTORY: ".github/workflows/src/Python"
   PREFIX: "woof-ai"
   ENVIRONMENT: "dev"
-  PYTHON_VERSION: "3.10"
+  PYTHON_VERSION: "3.9"
+  AZURE_FUNCTIONAPP_NAME: "woof-ai-dev"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v3
+
+      - name: Set up Python ENV
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - name: run Python Script
-        run: pip install -r .github/workflows/src/Python/requirements.txt
 
-      - name: Run Python Script
-        run: python .github/workflows/src/Python/__init__.py
+      - name: Resolve Project Dependencies Using Pip
+        shell: bash
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+          popd
+
+      - name: Run Azure Functions Action
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
 
       - name: Generate Deployment Package
         run: |
