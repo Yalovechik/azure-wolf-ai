@@ -96,7 +96,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v3
         with:
           name: function-deployment
 
