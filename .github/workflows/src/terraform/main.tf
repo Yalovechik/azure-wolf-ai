@@ -58,7 +58,7 @@ resource "azurerm_linux_function_app" "fn_app" {
   }
 
   identity {
-    type = ["SystemAssigned", "UserAssigned"]
+    type = "SystemAssigned UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.functions.id]
   }
 }
