@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - ".github/workflows/src/Python/HttpTrigger1/**"
+      - ".github/workflows/src/Python/**"
 
 env:
   PYTHON_VERSION: "3.10"
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: run Python Script
-        run: pip install -r .github/workflows/src/Python/HttpTrigger1/requirements.txt
+        run: pip install -r .github/workflows/src/Python/requirements.txt
 
       - name: Run Python Script
-        run: python .github/workflows/src/Python/HttpTrigger1/HttpTrigger1/__init__.py
+        run: python .github/workflows/src/Python/__init__.py
