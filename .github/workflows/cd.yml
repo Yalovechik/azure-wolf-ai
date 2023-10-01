@@ -31,18 +31,10 @@ jobs:
       - name: Run Python Script
         run: python .github/workflows/src/Python/HttpTrigger1/HttpTrigger1/__init__.py
 
-      - name: Create folder
-        run: |
-          mkdir publish
-
-          cp -ru ./* ./publish/
-        working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}
-
       - name: Generate Deployment Package
         run: |
-          cd ..
           zip -r deployment.zip ./
-        working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}/publish
+        working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}
 
       - name: Upload Deployment Package
         uses: actions/upload-artifact@v2
