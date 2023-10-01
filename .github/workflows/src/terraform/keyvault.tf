@@ -28,6 +28,6 @@ resource "azurerm_key_vault_access_policy" "function-user" {
   
 
   secret_permissions = [
-    "Get"
+    "Get, List"
   ]
 }
