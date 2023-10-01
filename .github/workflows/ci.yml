@@ -24,3 +24,6 @@ jobs:
 
       - name: Run Python Script
         run: python .github/workflows/src/Python/HttpTrigger1/HttpTrigger1/__init__.py
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore

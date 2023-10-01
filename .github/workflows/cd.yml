@@ -9,11 +9,43 @@ on:
       - ".github/workflows/**"
 
 env:
-  WORKING_DIRECTORY: ".github/workflows/src/terraform"
+  TERRAFORM_WORKING_DIRECTORY: ".github/workflows/src/terraform"
+  PYTHON_WORKING_DIRECTORY: ".github/workflows/src/Python"
   PREFIX: "woof-ai"
   ENVIRONMENT: "dev"
+  PYTHON_VERSION: "3.10"
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: run Python Script
+        run: pip install -r .github/workflows/src/Python/HttpTrigger1/requirements.txt
+
+      - name: Run Python Script
+        run: python .github/workflows/src/Python/HttpTrigger1/HttpTrigger1/__init__.py
+
+      - name: Create folder
+        run: mkdir publish
+        working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}
+
+      - name: Generate Deployment Package
+        run: |
+          cd ..
+          zip -r ../deployment.zip ./
+        working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}/publish
+
+      - name: Upload Deployment Package
+        uses: actions/upload-artifact@v2
+        with:
+          name: function-deployment
+          path: ${{ env.PYTHON_WORKING_DIRECTORY }}/deployment.zip
+
   terraform:
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +69,7 @@ jobs:
           TF_BACKEND_KEY: ${{ env.PREFIX }}-${{ env.ENVIRONMENT }}
           TV_VAR_prefix: ${{ env.PREFIX }}
           TV_VAR_environment: ${{ env.ENVIRONMENT }}
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.TERRAFORM_WORKING_DIRECTORY }}
         run: |
           terraform init \
             -backend-config="resource_group_name=$BACKEND_RESOURCE_GROUP_NAME" \
