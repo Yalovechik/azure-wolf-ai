@@ -42,7 +42,7 @@ resource "azurerm_linux_function_app" "fn_app" {
 
   site_config {
     application_stack {
-      python_version = "3.0"
+      python_version = "3.10"
       
     }
     cors {
