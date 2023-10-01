@@ -41,7 +41,7 @@ jobs:
       - name: Generate Deployment Package
         run: |
           cd ..
-          zip -r deployment.zip ./
+          cp -ru ./* ./publish/
         working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}/publish
 
       - name: Upload Deployment Package
