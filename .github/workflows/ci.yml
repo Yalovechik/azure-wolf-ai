@@ -20,4 +20,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: run Python Script
+        run: pip install -r .github/workflows/src/Python/HttpTrigger1/requirements.txt
+
+      - name: Run Python Script
         run: python .github/workflows/src/Python/HttpTrigger1/__init__.py
