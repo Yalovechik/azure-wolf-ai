@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/src/Python/HttpTrigger1/**"
+
+env:
+  PYTHON_VERSION: "3.10"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: run Python Script
+        run: python .github/workflows/src/Python/HttpTrigger1/__init__.py
