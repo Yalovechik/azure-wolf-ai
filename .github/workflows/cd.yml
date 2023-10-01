@@ -33,8 +33,8 @@ jobs:
 
       - name: Create folder
         run: |
-        mkdir publish
-        cp -r .github/workflows/src/Python ./publish
+          mkdir publish
+          cp -r .github/workflows/src/Python ./publish
         working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}
 
       - name: Generate Deployment Package
