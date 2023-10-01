@@ -19,7 +19,7 @@ variable "functionapp" {
 }
 
 resource "random_string" "storage_name" {
-    length = 24
+    length = 10
     upper = false
     lower = true
     number = true
