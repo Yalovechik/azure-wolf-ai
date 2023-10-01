@@ -22,7 +22,7 @@ resource "azurerm_service_plan" "fn_app_service_plan" {
 }
 
 
-data "azure_client_config" "current" {}
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_user_assigned_identity" "functions" {
   location            = var.location

@@ -26,6 +26,6 @@ resource "random_string" "storage_name" {
     special = false
 }
 
-variable "storage_account_access_key" {
-  description = "The access key for your Azure Storage Account."
-}
+# variable "storage_account_access_key" {
+#   description = "The access key for your Azure Storage Account."
+# }
