@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - ".github/workflows/src/terraform/**"
+      - ".github/workflows/src/Python/**"
       - ".github/workflows/**"
 
 env:
