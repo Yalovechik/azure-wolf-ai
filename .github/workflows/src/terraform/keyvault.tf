@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "this" {
-  name                     = "${random_string.storage_name.result}"
+  name                     = "${var.prefix}-${var.environment}-${random_string.storage_name.result}"
   location                 = "${var.location}"
   resource_group_name      = azurerm_resource_group.this.name
   enabled_for_disk_encryption = true
