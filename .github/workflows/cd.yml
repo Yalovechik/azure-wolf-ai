@@ -35,13 +35,13 @@ jobs:
         run: |
           mkdir publish
 
-          cp -r ./* ./publish/
+          cp -ru ./* ./publish/
         working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}
 
       - name: Generate Deployment Package
         run: |
           cd ..
-          cp -ru ./* ./publish/
+          zip -r deployment.zip ./
         working-directory: ${{ env.PYTHON_WORKING_DIRECTORY }}/publish
 
       - name: Upload Deployment Package
