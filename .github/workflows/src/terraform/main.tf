@@ -41,6 +41,8 @@ resource "azurerm_linux_function_app" "fn_app" {
   service_plan_id = azurerm_service_plan.fn_app_service_plan.id
 
   site_config {
+      application_insights_key = azurerm_application_insights.insight.instrumentation_key
+      application_insights_connection_string = azurerm_application_insights.insight.connection_string
     application_stack {
       python_version = "3.10"
       
@@ -53,7 +55,7 @@ resource "azurerm_linux_function_app" "fn_app" {
 
   app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = 1
-    "APPINSIGHTS_INSTRUMENTATIONKEY"= azurerm_application_insights.insight.instrumentation_key
+    # "APPINSIGHTS_INSTRUMENTATIONKEY"= azurerm_application_insights.insight.instrumentation_key
 
   }
 
