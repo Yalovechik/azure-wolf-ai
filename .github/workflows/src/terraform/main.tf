@@ -43,11 +43,12 @@ resource "azurerm_linux_function_app" "fn_app" {
   site_config {
     application_stack {
       python_version = "3.0"
-      cors {
+      
+    }
+    cors {
         allowed_origins = ["https://portal.azure.com"]
         support_credentials = true
       }
-    }
   }
 
   app_settings = {

@@ -18,7 +18,7 @@ resource "azurerm_key_vault_access_policy" "terraform-user" {
   
 
   secret_permissions = [
-    "Backup", "Delete", "Get", "List", "Encrypt", "Decrypt", "Set","Purge", "Restore"
+    "Backup", "Delete", "Get", "List",  "Set","Purge", "Restore"
   ]
 }
 resource "azurerm_key_vault_access_policy" "function-user" {
@@ -28,6 +28,6 @@ resource "azurerm_key_vault_access_policy" "function-user" {
   
 
   secret_permissions = [
-    "Get, List"
+    "Get"
   ]
 }
