@@ -44,9 +44,7 @@ data "azurerm_api_management" "this" {
   resource_group_name = azurerm_resource_group.this.name
 }
 
-output "api_management_id" {
-  value = data.azurerm_api_management.this.gateway_url
-}
+
 
 resource "azurerm_api_management_api" "api_management_api_public" {
   name = "${var.prefix}-${var.environment}"
