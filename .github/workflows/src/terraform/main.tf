@@ -48,7 +48,7 @@ resource "azurerm_api_management_api" "api_management_api_public" {
   display_name = "Public"
   path = ""
   protocols = ["https"]
-  service_url = "https://${azurerm_function_app.fn_app.default_hostname}/api/test"
+  service_url = "https://${azurerm_linux_function_app.fn_app.default_hostname}/api/test"
   subscription_required = false
 }
 
