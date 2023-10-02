@@ -30,6 +30,41 @@ resource "azurerm_user_assigned_identity" "functions" {
   resource_group_name = azurerm_resource_group.this.name
 }
 
+resource "azurerm_api_management" "api-management" {
+  name  = "${var.prefix}-${var.environment}"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+  publisher_name      = "ai-comp"
+  publisher_email     = "Yalovechik2012@gmail.com"
+  sku_name = "Developer_1"
+
+}
+
+resource "azurerm_api_management_api" "api_management_api_public" {
+  name = "${var.prefix}-${var.environment}"
+  api_management_name = azurerm_api_management.api-management.name
+  resource_group_name   = azurerm_resource_group.this.name
+  revision = 1
+  display_name = "Public"
+  path = ""
+  protocols = ["https"]
+  service_url = "https://${azurerm_function_app.fn_app.default_hostname}/api/test"
+  subscription_required = false
+}
+
+resource "azurerm_api_management_api_operation" "api_management_api_operation_public" {
+  operation_id = "public-hello-word"
+  api_name = azurerm_api_management_api.api_management_api_public.name
+  api_management_name = azurerm_api_management.api-management.name
+  resource_group_name = azurerm_resource_group.this.name
+  display_name = "Hello word ENDPOINT"
+  method = "GET"
+  url_template = "/test"
+
+}
+
+
+
 
 resource "azurerm_linux_function_app" "fn_app" {
   name = "${var.prefix}-${var.environment}"
