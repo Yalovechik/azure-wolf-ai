@@ -32,7 +32,7 @@ resource "azurerm_user_assigned_identity" "functions" {
 }
 
 resource "azurerm_api_management" "api-management" {
-  name  = "${var.prefix}-${var.environment}"
+  name  = "api_management-${var.prefix}-${var.environment}"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   publisher_name      = "ai-comp"
@@ -51,7 +51,7 @@ resource "azurerm_api_management" "api-management" {
 
 
 resource "azurerm_api_management_api" "api_management_api_public" {
-  name = "${var.prefix}-${var.environment}"
+  name = "api_management_api-${var.prefix}-${var.environment}"
   api_management_name = azurerm_api_management.api-management.name
   resource_group_name   = azurerm_resource_group.this.name
   revision = 1
