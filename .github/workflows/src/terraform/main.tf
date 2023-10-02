@@ -83,7 +83,7 @@ resource "azurerm_linux_function_app" "fn_app" {
       
     }
     cors {
-        allowed_origins = ["https://portal.azure.com"]
+        allowed_origins = [data.azurerm_api_management.api-management.gateway_url, "https://portal.azure.com"]
         support_credentials = true
       }
   }
