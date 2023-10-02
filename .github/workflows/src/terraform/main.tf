@@ -37,6 +37,9 @@ resource "azurerm_api_management" "api-management" {
   publisher_name      = "ai-comp"
   publisher_email     = "Yalovechik2012@gmail.com"
   sku_name = "Developer_1"
+   identity {
+    type = "SystemAssigned"
+  }
 }
 
 # data "azurerm_api_management" "this" {
@@ -67,6 +70,21 @@ resource "azurerm_api_management_api_operation" "api_management_api_operation_pu
   method = "GET"
   url_template = "/test"
 
+}
+
+resource "azurerm_api_management_api_policy" "api_management_api_policy_api_public" {
+  api_name            = azurerm_api_management_api.api_management_api_public.name
+  api_management_name = azurerm_api_management.api-management.name
+  resource_group_name = azurerm_resource_group.this.name
+
+  xml_content = <<XML
+<policies>
+  <inbound>
+    <base />
+    <authentication-managed-identity resource="bf08044d-25d8-4f89-bbef-4010507f0d6a" ignore-error="false" />
+  </inbound>
+</policies>
+XML
 }
 
 # Create an Application Object for the function app
