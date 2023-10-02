@@ -47,7 +47,7 @@ resource "azurerm_api_management" "api-management" {
 
 
 resource "azurerm_api_management_api" "api_management_api_public" {
-  name = "${var.prefix}-${var.environment}"
+  
   api_management_name = azurerm_api_management.api-management.name
   resource_group_name   = azurerm_resource_group.this.name
   revision = 1
@@ -67,6 +67,14 @@ resource "azurerm_api_management_api_operation" "api_management_api_operation_pu
   method = "GET"
   url_template = "/test"
 
+}
+
+# Create an Application Object for the function app
+
+resource "azuread_application" "ad_application_function_app" {
+  name = "${var.prefix}-${var.environment}"
+  type = "webapp/api"
+  prevent_duplicate_names = true
 }
 
 
@@ -104,5 +112,16 @@ resource "azurerm_linux_function_app" "fn_app" {
   identity {
     type = "SystemAssigned, UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.functions.id]
+  }
+
+  auth_settings {
+    enabled = true
+    issuer = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
+    default_provider = "AzureActiveDirectory"
+     active_directory {
+    client_id = azuread_application.ad_application_function_app.application_id
+  }
+  unauthenticated_client_action = "RedirectToLoginPage"
+
   }
 }
