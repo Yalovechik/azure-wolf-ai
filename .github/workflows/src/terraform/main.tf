@@ -47,7 +47,7 @@ resource "azurerm_api_management" "api-management" {
 
 
 resource "azurerm_api_management_api" "api_management_api_public" {
-  
+  name = "${var.prefix}-${var.environment}"
   api_management_name = azurerm_api_management.api-management.name
   resource_group_name   = azurerm_resource_group.this.name
   revision = 1
