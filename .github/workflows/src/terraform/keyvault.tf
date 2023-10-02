@@ -27,6 +27,7 @@ resource "azurerm_key_vault_access_policy" "function-user" {
   object_id    = azurerm_user_assigned_identity.functions.principal_id
   
 
+  # Secret
   secret_permissions = [
     "Get",
     "List"
