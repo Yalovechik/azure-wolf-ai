@@ -66,6 +66,7 @@ data "azurerm_api_management_api" "api_management_api_public" {
   name                = "${var.prefix}-${var.environment}"
   resource_group_name = azurerm_resource_group.this.name
   api_management_name = azurerm_api_management.api-management.name
+  revision = "2"
 }
 
 
