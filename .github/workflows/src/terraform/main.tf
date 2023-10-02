@@ -74,7 +74,7 @@ resource "azurerm_api_management_api_operation" "api_management_api_operation_pu
 
 resource "azurerm_api_management_api_policy" "api_management_api_policy_api_public" {
   api_name            = azurerm_api_management_api.api_management_api_public.name
-  api_management_name = azurerm_api_management.api-management.name
+  api_management_name = azurerm_api_management_api.api_management_api_public.api_management_name
   resource_group_name = azurerm_resource_group.this.name
 
   xml_content = <<XML
