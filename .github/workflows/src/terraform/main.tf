@@ -72,7 +72,7 @@ resource "azurerm_api_management_api_operation" "api_management_api_operation_pu
 # Create an Application Object for the function app
 
 resource "azuread_application" "ad_application_function_app" {
-  name = "${var.prefix}-${var.environment}"
+  name = "${var.prefix}-${var.environment}-dev"
   type = "webapp/api"
   prevent_duplicate_names = true
 }
