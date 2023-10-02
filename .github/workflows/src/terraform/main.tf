@@ -61,6 +61,14 @@ resource "azurerm_api_management_api" "api_management_api_public" {
   subscription_required = false
 }
 
+
+data "azurerm_api_management_api" "api_management_api_public" {
+  name                = "${var.prefix}-${var.environment}"
+  resource_group_name = azurerm_resource_group.this.name
+  api_management_name = azurerm_api_management.api-management.name
+}
+
+
 resource "azurerm_api_management_api_operation" "api_management_api_operation_public" {
   operation_id = "public-hello-word"
   api_name = azurerm_api_management_api.api_management_api_public.name
