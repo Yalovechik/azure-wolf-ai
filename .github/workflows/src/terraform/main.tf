@@ -22,6 +22,7 @@ resource "azurerm_service_plan" "fn_app_service_plan" {
 }
 
 
+# current changes
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_user_assigned_identity" "functions" {
@@ -83,8 +84,8 @@ resource "azurerm_api_management_api_operation" "api_management_api_operation_pu
 
 resource "azurerm_api_management_api_policy" "api_management_api_policy_api_public" {
   api_name             = azurerm_api_management_api.api_management_api_public.name
-  api_management_name = azurerm_api_management.api-management.name
-  resource_group_name = azurerm_resource_group.this.name
+  api_management_name  = azurerm_api_management.api-management.name
+  resource_group_name  = azurerm_resource_group.this.name
 
   xml_content = <<XML
 <policies>
