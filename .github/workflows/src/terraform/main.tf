@@ -39,10 +39,10 @@ resource "azurerm_api_management" "api-management" {
   sku_name = "Developer_1"
 }
 
-data "azurerm_api_management" "this" {
-  name                = "${var.prefix}-${var.environment}"
-  resource_group_name = azurerm_resource_group.this.name
-}
+# data "azurerm_api_management" "this" {
+#   name                = "${var.prefix}-${var.environment}"
+#   resource_group_name = azurerm_resource_group.this.name
+# }
 
 
 
@@ -89,7 +89,7 @@ resource "azurerm_linux_function_app" "fn_app" {
       
     }
     cors {
-        allowed_origins = [output.api_management_id.value, "https://portal.azure.com"]
+        allowed_origins = ["https://woof-ai-dev.azure-api.net/**", "https://portal.azure.com"]
         support_credentials = true
       }
   }
