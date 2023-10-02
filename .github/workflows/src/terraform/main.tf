@@ -37,7 +37,15 @@ resource "azurerm_api_management" "api-management" {
   publisher_name      = "ai-comp"
   publisher_email     = "Yalovechik2012@gmail.com"
   sku_name = "Developer_1"
+}
 
+data "azurerm_api_management" "this" {
+  name                = "${var.prefix}-${var.environment}"
+  resource_group_name = azurerm_resource_group.this.name
+}
+
+output "api_management_id" {
+  value = data.azurerm_api_management.this.gateway_url
 }
 
 resource "azurerm_api_management_api" "api_management_api_public" {
@@ -83,7 +91,7 @@ resource "azurerm_linux_function_app" "fn_app" {
       
     }
     cors {
-        allowed_origins = [data.azurerm_api_management.api-management.gateway_url, "https://portal.azure.com"]
+        allowed_origins = [output.api_management_id.value, "https://portal.azure.com"]
         support_credentials = true
       }
   }
