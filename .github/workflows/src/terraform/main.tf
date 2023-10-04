@@ -49,11 +49,11 @@ resource "azurerm_storage_table" "table_scraping" {
   storage_account_name = azurerm_storage_account.storage.name
 }
 
-resource "azurerm_storage_table_entity" "table_entity_scraping" {
-  storage_account_name = azurerm_storage_account.storage.name
-  table_name           = azurerm_storage_table.table_scraping.name
-   depends_on = [azurerm_storage_table.table_scraping]
-}
+# resource "azurerm_storage_table_entity" "table_entity_scraping" {
+#   storage_account_name = azurerm_storage_account.storage.name
+#   table_name           = azurerm_storage_table.table_scraping.name
+#    depends_on = [azurerm_storage_table.table_scraping]
+# }
 
 resource "azurerm_service_plan" "fn_app_service_plan" {
   name = "${var.prefix}-${var.environment}"
