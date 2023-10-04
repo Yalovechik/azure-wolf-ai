@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "storage" {
 
 # Text container
 resource "azurerm_storage_container" "imagecontainer" {
-  name                  = "scraping-${var.prefix}-${var.environment}"  
+  name                  = "imagecontainer-${var.prefix}-${var.environment}"  
   storage_account_name  = azurerm_storage_account.storage.name
   container_access_type = "private"  
 }
