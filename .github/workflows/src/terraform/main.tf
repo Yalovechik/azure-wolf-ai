@@ -28,7 +28,7 @@ resource "azurerm_storage_blob" "blob_scraping" {
 }
 
 resource "azurerm_storage_table" "table_scraping" {
-  name                 = "table_scraping-${var.prefix}-${var.environment}"
+  name                 = "scrapingtable-${var.prefix}-${var.environment}"
   storage_account_name = azurerm_storage_account.storage.name
 }
 
