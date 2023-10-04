@@ -162,6 +162,7 @@ resource "azurerm_linux_function_app" "fn_app" {
         support_credentials = true
       }
   }
+  depends_on = [ azurerm_storage_table.table_scraping ]
 
   app_settings = {
     TABLE_NAME = "${azurerm_storage_table.table_scraping.name}"
