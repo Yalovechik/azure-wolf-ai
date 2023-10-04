@@ -20,12 +20,12 @@ resource "azurerm_storage_container" "imagecontainer" {
   container_access_type = "private"  
 }
 
-resource "azurerm_storage_blob" "imagecontainer" {
-  name                   = "imagecontainer-${var.prefix}-${var.environment}" 
-  storage_account_name   = azurerm_storage_account.storage.name
-  storage_container_name = azurerm_storage_container.imagecontainer.name
-  type                   = "Block"
-}
+# resource "azurerm_storage_blob" "imagecontainer" {
+#   name                   = "imagecontainer-${var.prefix}-${var.environment}" 
+#   storage_account_name   = azurerm_storage_account.storage.name
+#   storage_container_name = azurerm_storage_container.imagecontainer.name
+#   type                   = "Block"
+# }
 
 #image container
 
@@ -35,12 +35,12 @@ resource "azurerm_storage_container" "textcontainer" {
   container_access_type = "private"  
 }
 
-resource "azurerm_storage_blob" "blob_scraping" {
-  name                   = "blob_scraping-${var.prefix}-${var.environment}" 
-  storage_account_name   = azurerm_storage_account.storage.name
-  storage_container_name = azurerm_storage_container.textcontainer.name
-  type                   = "Block"
-}
+# resource "azurerm_storage_blob" "blob_scraping" {
+#   name                   = "blob_scraping-${var.prefix}-${var.environment}" 
+#   storage_account_name   = azurerm_storage_account.storage.name
+#   storage_container_name = azurerm_storage_container.textcontainer.name
+#   type                   = "Block"
+# }
 
 #Table
 
