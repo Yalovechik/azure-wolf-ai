@@ -27,7 +27,7 @@ resource "random_string" "storage_name" {
 }
 
 variable "table" {
-    type = "string"
+    type = string
     default = "scraping"
     description = "the primary table for web scraping"
 }
