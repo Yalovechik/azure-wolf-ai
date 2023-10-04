@@ -164,6 +164,9 @@ resource "azurerm_linux_function_app" "fn_app" {
   }
 
   app_settings = {
+    TABLE_NAME = "${azurerm_storage_table.table_scraping.name}"
+    BLOB_STORAGE_NAME = "${azurerm_storage_container.scraping.name}"
+    STORAGE_CONNECTION_STRING = "${azurerm_storage_account.storage.primary_connection_string}"
     WEBSITE_RUN_FROM_PACKAGE = 1
     # SCM_DO_BUILD_DURING_DEPLOYMENT=true
     # "APPINSIGHTS_INSTRUMENTATIONKEY"= azurerm_application_insights.insight.instrumentation_key
@@ -176,9 +179,6 @@ resource "azurerm_linux_function_app" "fn_app" {
   }
 
   auth_settings {
-    TABLE_NAME = "${azurerm_storage_table.table_scraping.name}"
-    BLOB_STORAGE_NAME = "${azurerm_storage_container.scraping.name}"
-    STORAGE_CONNECTION_STRING = "${azurerm_storage_account.storage.primary_connection_string}"
     enabled = true
     issuer = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
     default_provider = "AzureActiveDirectory"
