@@ -15,20 +15,20 @@ resource "azurerm_storage_account" "storage" {
 
 
 resource "azurerm_storage_container" "scraping" {
-  name                  = "scraping-${random_string.storage_name.result}"  
+  name                  = "scraping-${var.prefix}-${var.environment}"  
   storage_account_name  = azurerm_storage_account.storage.name
   container_access_type = "private"  
 }
 
 resource "azurerm_storage_blob" "blob_scraping" {
-  name                   = "blob_scraping-${random_string.storage_name.result}" 
+  name                   = "blob_scraping-${var.prefix}-${var.environment}" 
   storage_account_name   = azurerm_storage_account.storage.name
   storage_container_name = azurerm_storage_container.scraping.name
   type                   = "Block"
 }
 
 resource "azurerm_storage_table" "table_scraping" {
-  name                 = "table_scraping-${random_string.storage_name.result}"
+  name                 = "table_scraping-${var.prefix}-${var.environment}"
   storage_account_name = azurerm_storage_account.storage.name
 }
 
