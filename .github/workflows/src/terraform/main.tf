@@ -42,6 +42,7 @@ resource "azurerm_storage_table_entity" "table_entity_scraping" {
   entity = {
     example = "example"
   }
+   depends_on = [azurerm_storage_table.table_scraping]
 }
 
 resource "azurerm_service_plan" "fn_app_service_plan" {
