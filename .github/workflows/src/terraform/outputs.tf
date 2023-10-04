@@ -10,3 +10,11 @@ output "function_name" {
 # output "api_management_id" {
 #   value = data.azurerm_api_management.this.gateway_url
 # }
+
+output "table_name" {
+  value = azurerm_storage_table.table_scraping.name
+}
+
+output "blob_storage_name" {
+  value = azurerm_storage_container.scraping.name
+}

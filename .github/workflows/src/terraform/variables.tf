@@ -26,6 +26,12 @@ resource "random_string" "storage_name" {
     special = false
 }
 
+variable "table" {
+    type = "string"
+    default = "scraping"
+    description = "the primary table for web scraping"
+}
+
 # variable "storage_account_access_key" {
 #   description = "The access key for your Azure Storage Account."
 # }

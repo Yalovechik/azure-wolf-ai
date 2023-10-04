@@ -13,6 +13,37 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
 }
 
+
+resource "azurerm_storage_container" "scraping" {
+  name                  = "scraping-${random_string.storage_name.result}"  
+  storage_account_name  = azurerm_storage_account.storage.name
+  container_access_type = "private"  
+}
+
+resource "azurerm_storage_blob" "blob_scraping" {
+  name                   = "blob_scraping-${random_string.storage_name.result}" 
+  storage_account_name   = azurerm_storage_account.storage.name
+  storage_container_name = azurerm_storage_container.scraping.name
+  type                   = "Block"
+}
+
+resource "azurerm_storage_table" "table_scraping" {
+  name                 = "table_scraping-${random_string.storage_name.result}"
+  storage_account_name = azurerm_storage_account.storage.name
+}
+
+resource "azurerm_storage_table_entity" "table_entity_scraping" {
+  storage_account_name = azurerm_storage_account.storage.name
+  table_name           = var.table
+
+  partition_key = "URLs"
+  row_key       = "examplerow"
+
+  entity = {
+    example = "example"
+  }
+}
+
 resource "azurerm_service_plan" "fn_app_service_plan" {
   name = "${var.prefix}-${var.environment}"
   resource_group_name = azurerm_resource_group.this.name
@@ -20,6 +51,8 @@ resource "azurerm_service_plan" "fn_app_service_plan" {
   os_type             = "Linux"
   sku_name            = "Y1"
 }
+
+
 
 
 # current changes
@@ -143,6 +176,9 @@ resource "azurerm_linux_function_app" "fn_app" {
   }
 
   auth_settings {
+    TABLE_NAME = "${azurerm_storage_table.table_scraping.name}"
+    BLOB_STORAGE_NAME = "${azurerm_storage_container.scraping.name}"
+    STORAGE_CONNECTION_STRING = "${azurerm_storage_account.storage.primary_connection_string}"
     enabled = true
     issuer = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
     default_provider = "AzureActiveDirectory"
