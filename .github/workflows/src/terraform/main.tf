@@ -52,13 +52,6 @@ resource "azurerm_storage_table" "table_scraping" {
 resource "azurerm_storage_table_entity" "table_entity_scraping" {
   storage_account_name = azurerm_storage_account.storage.name
   table_name           = azurerm_storage_table.table_scraping.name
-
-  partition_key = "URLs"
-  row_key       = "examplerow"
-
-  entity = {
-    example = "example"
-  }
    depends_on = [azurerm_storage_table.table_scraping]
 }
 

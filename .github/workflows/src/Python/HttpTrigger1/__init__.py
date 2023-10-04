@@ -209,6 +209,7 @@
 # from azure.data.tables import TableServiceClient
 # from urllib.parse import urlencode
 
+
 # def main(req: func.HttpRequest) -> func.HttpResponse:
 #     logging.info('Python HTTP trigger function processed a request.')
 
@@ -367,6 +368,8 @@ import re
 import requests  # Don't forget to add 'requests' to your requirements.txt file
 from azure.data.tables import TableServiceClient
 import os
+from urllib.parse import urlencode
+
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -384,7 +387,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if not url_domain:
         try:
-            req_body = req.get_json()
+            req_body = req.get_json()  
         except ValueError:
             pass
         else:
@@ -394,21 +397,22 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=mdtje40jf6;AccountKey=B+zzS7rp644l9q5I5I94rx07jpd7xHuymgBDMQsB1E1u/9+ix+lV5o83BzZvjjmdFUGV106uRfvK+ASt4Gkesg==;EndpointSuffix=core.windows.net")
 
         # Store text content in a separate blob container
-        text_container_client = blob_service_client.get_container_client("textcontainer")
+        text_container_client = blob_service_client.get_container_client(textcontainer)
         text_blob_client = text_container_client.get_blob_client("doc.txt")
         text_blob_client.upload_blob(result["text_content"], overwrite=True)
 
         # Store images in another blob container (e.g., "imagecontainer")
-        image_container_client = blob_service_client.get_container_client("imagecontainer")
+        image_container_client = blob_service_client.get_container_client(imagecontainer)
 
         # Set up table client
         table_service_client = TableServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=mdtje40jf6;AccountKey=B+zzS7rp644l9q5I5I94rx07jpd7xHuymgBDMQsB1E1u/9+ix+lV5o83BzZvjjmdFUGV106uRfvK+ASt4Gkesg==;EndpointSuffix=core.windows.net")
         # table_name = "test"
         table_client = table_service_client.get_table_client(table_name)
+        encoded_url = urlencode({'url_full': url_full}) 
 
         entity = {
             "PartitionKey": "URLs",  # You can choose your partition key
-            "RowKey": "1",           # You can use a unique identifier as the row key
+            "RowKey": encoded_url,           # You can use a unique identifier as the row key
             "url_full": url_full
         }
 
