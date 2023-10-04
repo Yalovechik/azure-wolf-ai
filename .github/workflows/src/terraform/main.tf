@@ -13,9 +13,24 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
 }
 
-
-resource "azurerm_storage_container" "scraping" {
+# Text container
+resource "azurerm_storage_container" "imagecontainer" {
   name                  = "scraping-${var.prefix}-${var.environment}"  
+  storage_account_name  = azurerm_storage_account.storage.name
+  container_access_type = "private"  
+}
+
+resource "azurerm_storage_blob" "imagecontainer" {
+  name                   = "imagecontainer-${var.prefix}-${var.environment}" 
+  storage_account_name   = azurerm_storage_account.storage.name
+  storage_container_name = azurerm_storage_container.imagecontainer.name
+  type                   = "Block"
+}
+
+#image container
+
+resource "azurerm_storage_container" "textcontainer" {
+  name                  = "textcontainer-${var.prefix}-${var.environment}"  
   storage_account_name  = azurerm_storage_account.storage.name
   container_access_type = "private"  
 }
@@ -23,9 +38,11 @@ resource "azurerm_storage_container" "scraping" {
 resource "azurerm_storage_blob" "blob_scraping" {
   name                   = "blob_scraping-${var.prefix}-${var.environment}" 
   storage_account_name   = azurerm_storage_account.storage.name
-  storage_container_name = azurerm_storage_container.scraping.name
+  storage_container_name = azurerm_storage_container.textcontainer.name
   type                   = "Block"
 }
+
+#Table
 
 resource "azurerm_storage_table" "table_scraping" {
   name                 = "scrapingtableAI"
@@ -167,7 +184,8 @@ resource "azurerm_linux_function_app" "fn_app" {
 
   app_settings = {
     TABLE_NAME = "${azurerm_storage_table.table_scraping.name}"
-    BLOB_STORAGE_NAME = "${azurerm_storage_container.scraping.name}"
+    BLOB_STORAGE_IMAGE_NAME = "${azurerm_storage_container.imagecontainer.name}"
+    BLOB_STORAGE_TEXT_NAME = "${azurerm_storage_container.textcontainer.name}"
     STORAGE_CONNECTION_STRING = "${azurerm_storage_account.storage.primary_connection_string}"
     WEBSITE_RUN_FROM_PACKAGE = 1
     # SCM_DO_BUILD_DURING_DEPLOYMENT=true

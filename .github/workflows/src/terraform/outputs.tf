@@ -15,6 +15,12 @@ output "table_name" {
   value = azurerm_storage_table.table_scraping.name
 }
 
-output "blob_storage_name" {
-  value = azurerm_storage_container.scraping.name
+output "imagecontainer_name" {
+  value = azurerm_storage_container.imagecontainer.name
 }
+
+
+output "textcontainer_name" {
+  value = azurerm_storage_container.textcontainer.name
+}
+
