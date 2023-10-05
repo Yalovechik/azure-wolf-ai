@@ -82,9 +82,9 @@ resource "azurerm_api_management" "api-management" {
   publisher_name      = "ai-comp"
   publisher_email     = "Yalovechik2012@gmail.com"
   sku_name = "Developer_1"
-   identity {
-    type = "SystemAssigned"
-  }
+  #  identity {
+  #   type = "SystemAssigned"
+  # }
 }
 
 # data "azurerm_api_management" "this" {
@@ -131,14 +131,14 @@ resource "azurerm_api_management_api_policy" "api_management_api_policy_api_publ
   api_management_name  = azurerm_api_management.api-management.name
   resource_group_name  = azurerm_resource_group.this.name
 
-  xml_content = <<XML
-<policies>
-  <inbound>
-    <base />
-    <authentication-managed-identity resource="bf08044d-25d8-4f89-bbef-4010507f0d6a" ignore-error="false" />
-  </inbound>
-</policies>
-XML
+#   xml_content = <<XML
+# <policies>
+#   <inbound>
+#     <base />
+#     <authentication-managed-identity resource="bf08044d-25d8-4f89-bbef-4010507f0d6a" ignore-error="false" />
+#   </inbound>
+# </policies>
+# XML
 }
 
 # Create an Application Object for the function app
@@ -191,15 +191,15 @@ resource "azurerm_linux_function_app" "fn_app" {
     identity_ids = [azurerm_user_assigned_identity.functions.id]
   }
 
-  auth_settings {
-    enabled = true
-    issuer = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
-    default_provider = "AzureActiveDirectory"
-     active_directory {
-    # client_id = azuread_application.ad_application_function_app.application_id
-    client_id = "bf08044d-25d8-4f89-bbef-4010507f0d6a"
-  }
-  unauthenticated_client_action = "RedirectToLoginPage"
+  # auth_settings {
+  #   enabled = true
+  #   issuer = "https://login.microsoftonline.com/${data.azurerm_client_config.current.tenant_id}"
+  #   default_provider = "AzureActiveDirectory"
+  #    active_directory {
+  #   # client_id = azuread_application.ad_application_function_app.application_id
+  #   client_id = "bf08044d-25d8-4f89-bbef-4010507f0d6a"
+  # }
+  # unauthenticated_client_action = "RedirectToLoginPage"
 
-  }
+  # }
 }
