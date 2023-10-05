@@ -1,3 +1,45 @@
+
+
+
+# import re
+# import requests
+# from bs4 import BeautifulSoup
+
+# def extract_text_and_images(url):
+#     try:
+#         # Make an HTTP request to the given URL to retrieve the page's HTML
+#         response = requests.get(url)
+#         response.raise_for_status()
+
+#         # Parse the HTML content using BeautifulSoup
+#         soup = BeautifulSoup(response.text, "html.parser")
+
+#         # Extract text content from the HTML
+#         text_content = soup.get_text()
+
+#         # Find all image tags in the HTML
+#         img_tags = soup.find_all("img")
+
+#         # Extract the URLs of the images
+#         image_urls = []
+
+#         for img_tag in img_tags:
+#             src = img_tag.get('src')
+#             if src:
+#                 image_urls.append(src)
+
+#         return {
+#             "text_content": text_content,
+#             "image_urls": image_urls
+#         }
+
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
+#         return {
+#             "text_content": "",
+#             "image_urls": []
+#         }
+
 import re
 import requests
 from bs4 import BeautifulSoup

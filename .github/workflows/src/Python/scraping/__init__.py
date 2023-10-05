@@ -1,29 +1,4 @@
 # import logging
-
-# import azure.functions as func
-
-
-# def main(req: func.HttpRequest) -> func.HttpResponse:
-#     logging.info('Python HTTP trigger function processed a request.')
-
-#     name = req.params.get('name')
-#     if not name:
-#         try:
-#             req_body = req.get_json()
-#         except ValueError:
-#             pass
-#         else:
-#             name = req_body.get('name')
-
-#     if name:
-#         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-#     else:
-#         return func.HttpResponse(
-#              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-#              status_code=200
-#         )
-
-# import logging
 # import azure.functions as func
 # from azure.storage.blob import BlobServiceClient
 # from . import scraper
@@ -209,7 +184,6 @@
 # from azure.data.tables import TableServiceClient
 # from urllib.parse import urlencode
 
-
 # def main(req: func.HttpRequest) -> func.HttpResponse:
 #     logging.info('Python HTTP trigger function processed a request.')
 
@@ -363,21 +337,13 @@
 import logging
 import azure.functions as func
 from azure.storage.blob import BlobServiceClient
-import scraper
+from . import scraper
 import re
 import requests  # Don't forget to add 'requests' to your requirements.txt file
 from azure.data.tables import TableServiceClient
-import os
-from urllib.parse import urlencode
-
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-
-    table_name = os.environ.get('TABLE_NAME')
-    imagecontainer = os.environ.get('BLOB_STORAGE_IMAGE_NAME')
-    textcontainer = os.environ.get('BLOB_STORAGE_TEXT_NAME')
-    
 
     url_domain = req.params.get('domain')
     url_ext = req.params.get('extension')
@@ -387,32 +353,31 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if not url_domain:
         try:
-            req_body = req.get_json()  
+            req_body = req.get_json()
         except ValueError:
             pass
         else:
             url_domain = req_body.get('domain')
 
     if url_domain:
-        blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=mdtje40jf6;AccountKey=B+zzS7rp644l9q5I5I94rx07jpd7xHuymgBDMQsB1E1u/9+ix+lV5o83BzZvjjmdFUGV106uRfvK+ASt4Gkesg==;EndpointSuffix=core.windows.net")
+        blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=teststorageaccountscrapp;AccountKey=N9IoVfErpKzPa4xhprvWKXWWdlPi6Tu0zW+o+EFXBDcN1DZc9yQtBH/NKY48rlsfqXIvQTThwWmQ+AStq4R0KQ==;EndpointSuffix=core.windows.net")
 
         # Store text content in a separate blob container
-        text_container_client = blob_service_client.get_container_client(textcontainer)
+        text_container_client = blob_service_client.get_container_client("textcontainer")
         text_blob_client = text_container_client.get_blob_client("doc.txt")
         text_blob_client.upload_blob(result["text_content"], overwrite=True)
 
         # Store images in another blob container (e.g., "imagecontainer")
-        image_container_client = blob_service_client.get_container_client(imagecontainer)
+        image_container_client = blob_service_client.get_container_client("imagecontainer")
 
         # Set up table client
-        table_service_client = TableServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=mdtje40jf6;AccountKey=B+zzS7rp644l9q5I5I94rx07jpd7xHuymgBDMQsB1E1u/9+ix+lV5o83BzZvjjmdFUGV106uRfvK+ASt4Gkesg==;EndpointSuffix=core.windows.net")
-        # table_name = "test"
+        table_service_client = TableServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=teststorageaccountscrapp;AccountKey=N9IoVfErpKzPa4xhprvWKXWWdlPi6Tu0zW+o+EFXBDcN1DZc9yQtBH/NKY48rlsfqXIvQTThwWmQ+AStq4R0KQ==;EndpointSuffix=core.windows.net")
+        table_name = "test"
         table_client = table_service_client.get_table_client(table_name)
-        encoded_url = urlencode({'url_full': url_full}) 
 
         entity = {
             "PartitionKey": "URLs",  # You can choose your partition key
-            "RowKey": encoded_url,           # You can use a unique identifier as the row key
+            "RowKey": "1",           # You can use a unique identifier as the row key
             "url_full": url_full
         }
 
