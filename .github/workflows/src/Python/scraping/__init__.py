@@ -337,7 +337,8 @@
 import logging
 import azure.functions as func
 from azure.storage.blob import BlobServiceClient
-import scraper
+from scraping import scraper
+
 import re
 import requests  # Don't forget to add 'requests' to your requirements.txt file
 from azure.data.tables import TableServiceClient
