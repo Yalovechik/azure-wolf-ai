@@ -182,7 +182,7 @@ resource "azurerm_linux_function_app" "fn_app" {
     STORAGE_CONNECTION_STRING = "${azurerm_storage_account.storage.primary_connection_string}"
     # WEBSITE_RUN_FROM_PACKAGE = 1
     # ENABLE_ORYX_BUILD=true
-    SCM_DO_BUILD_DURING_DEPLOYMENT=true
+    # SCM_DO_BUILD_DURING_DEPLOYMENT=true
     # SCM_DO_BUILD_DURING_DEPLOYMENT=true
     # "APPINSIGHTS_INSTRUMENTATIONKEY"= azurerm_application_insights.insight.instrumentation_key
 
