@@ -9,5 +9,6 @@ urllib3==1.26.13
 azure-storage-blob==12.9.0
 azure-cosmos==4.2.0
 azure-data-tables==12.4.4
+azure-functions
 
 
