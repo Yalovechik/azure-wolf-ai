@@ -411,7 +411,23 @@
 
 import logging
 import azure.functions as func
-from scraping import scraper
+import re
+import requests
+from bs4 import BeautifulSoup
+
+def get_email_addresses(url):
+    # Make an HTTP request to the given URL to retrieve the page's HTML
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # Create a regular expression pattern to match email addresses
+    pattern = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
+
+    # Find all the text on the page that matches the pattern
+    emails = re.findall(pattern, soup.text)
+
+    # Return the list of email addresses
+    return emails
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -420,7 +436,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     url_ext = req.params.get('extension')
     url_full = "http://www." + url_domain + "." + url_ext
 
-    email_result = scraper.get_email_addresses(url_full)
+    email_result = get_email_addresses(url_full)
 
     if not url_domain:
         try:
