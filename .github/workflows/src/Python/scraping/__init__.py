@@ -411,7 +411,7 @@
 
 import logging
 import azure.functions as func
-from scraper import get_email_addresses
+from . import scraper
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -420,7 +420,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     url_ext = req.params.get('extension')
     url_full = "http://www." + url_domain + "." + url_ext
 
-    email_result = get_email_addresses(url_full)
+    email_result = scraper.get_email_addresses(url_full)
 
     if not url_domain:
         try:
