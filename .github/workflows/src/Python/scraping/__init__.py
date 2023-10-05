@@ -337,7 +337,7 @@
 import logging
 import azure.functions as func
 from azure.storage.blob import BlobServiceClient
-from scraping import scraper
+from scraper import extract_text_and_images
 
 import re
 import requests  # Don't forget to add 'requests' to your requirements.txt file
@@ -350,7 +350,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     url_ext = req.params.get('extension')
     url_full = "http://www." + url_domain + "." + url_ext
 
-    result = scraper.extract_text_and_images(url_full)  # Use the updated scraper function
+    result = extract_text_and_images(url_full)  # Use the updated scraper function
 
     if not url_domain:
         try:
